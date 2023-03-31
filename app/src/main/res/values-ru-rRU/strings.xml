@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search">Поиск</string>
+    <string name="loading">Загрузка</string>
+    <string name="activity_full_bar">Назад к ленте</string>
+    <string name="activity_main_bar">Лента</string>
+</resources>

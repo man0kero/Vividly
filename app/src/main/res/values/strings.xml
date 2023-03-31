@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name" translatable="false">Vividly</string>
+    <string name="search">Search</string>
+    <string name="loading">Loading</string>
+    <string name="activity_full_bar">Back to Feed</string>
+    <string name="activity_main_bar">Feed</string>
+</resources>
