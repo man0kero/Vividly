@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.main_inner_toolbar);
         toolbar.setNavigationOnClickListener(view -> {
+            dialog.show();
             searchEditText.setText("");
             if (keyboardManager.isAcceptingText()) {
                 keyboardManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
