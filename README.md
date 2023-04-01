@@ -10,6 +10,7 @@ Here is a gallery application that uses the Unsplash API.
 
 - Gallery, which consists of a large number of images.
 - Full screen preview of the selected image.
+
 Each image on the gallery screen consists of: the image itself, the author and a short description.
 
 #### Features:
