@@ -2,8 +2,7 @@
 # Vividly
 ### Here is a gallery application that uses the Unsplash API.
 
-![Без названия](https://user-images.githubusercontent.com/97456931/229289383-b617862a-dec5-4645-bedd-a21758a491a0.png)
-
+<img width="257" alt="logo" src="https://user-images.githubusercontent.com/97456931/229289970-d484c062-c5fb-4ad8-a20d-bc2dd3b0f2cb.png">
 
 #### The application has 2 screens:
 
@@ -27,14 +26,19 @@ Each image on the gallery screen consists of: the image itself, the author and a
 4. Data Binding
 5. Java
 
-You can scroll through the feed and there will almost always be images, and when you scroll to the end, new photos will be loaded.
-Select any photo to view in full screen mode.
-
-<img width="388" alt="Снимок экрана 2023-04-01 в 15 26 52" src="https://user-images.githubusercontent.com/97456931/229289216-1e1abef3-0c41-42d7-8189-ef8f9a6df817.png">
 
 
-Click on the icon to the left of "Feed" to cancel the search or refresh the feed.
+#### You can scroll through the feed and there will almost always be images, and when you scroll to the end, new photos will be loaded.
+#### Select any photo to view in full screen mode.
 
-<img width="399" alt="Снимок экрана 2023-04-01 в 15 27 05" src="https://user-images.githubusercontent.com/97456931/229289117-a888abf3-8714-46d5-893d-2bca04aeabd0.png">
+![Без названия4](https://user-images.githubusercontent.com/97456931/229290198-c6666fd4-f4ea-4450-ae92-58c736a02f78.png)
+
+#### You can zoom in on a photo with a double tap or pinch of your fingers.
+
+![Без названия 2](https://user-images.githubusercontent.com/97456931/229290020-98aa6a7b-6afd-4103-b482-3cd209692032.png)
+
+#### Click on the icon to the left of "Feed" to cancel the search or refresh the feed.
+
+![Без названия5](https://user-images.githubusercontent.com/97456931/229290225-eb74998b-5287-4869-980b-a3601f8795e8.png)
 
 
