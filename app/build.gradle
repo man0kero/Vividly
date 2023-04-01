@@ -7,6 +7,10 @@ android {
     namespace 'com.manokero.vividly'
     compileSdk 33
 
+    dataBinding {
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "com.manokero.vividly"
         minSdk 28

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,6 +20,7 @@
             android:layout_height="?attr/actionBarSize"
             style="@style/Widget.MaterialComponents.ActionBar.Primary"
             app:title="@string/activity_full_bar"
+            app:contentInsetStartWithNavigation="0dp"
             app:titleTextColor="@color/white"
             app:navigationIcon="@drawable/ic_arrow_back_screen"
             android:background="@color/black"
@@ -28,8 +29,8 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.jsibbold.zoomage.ZoomageView
+        android:id="@+id/zoomageView"
         android:layout_centerInParent="true"
-        android:id="@+id/myZoomageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:zoomage_restrictBounds="false"
@@ -42,3 +43,4 @@
         app:zoomage_maxScale="8"/>
 
 </RelativeLayout>
+</layout>

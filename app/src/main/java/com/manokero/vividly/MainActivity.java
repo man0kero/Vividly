@@ -2,9 +2,9 @@ package com.manokero.vividly;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -13,30 +13,23 @@ import android.text.TextWatcher;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.Toast;
-
-import com.google.android.material.appbar.MaterialToolbar;
 import com.manokero.vividly.api.ApiProvider;
+import com.manokero.vividly.databinding.ActivityMainBinding;
 import com.manokero.vividly.model.ImageModel;
 import com.manokero.vividly.model.SearchModel;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-
-    private RecyclerView recyclerView;
+    private ActivityMainBinding mainBinding;
     private GridLayoutManager layoutManager;
     private Adapter adapter;
-    private ArrayList<ImageModel> list;
+    private ArrayList list;
     private AlertDialog dialog;
-    private MaterialToolbar toolbar;
-    private EditText searchEditText;
     private InputMethodManager keyboardManager;
 
     private int page = 1;
@@ -47,31 +40,28 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         keyboardManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        recyclerView = findViewById(R.id.recyclerView);
-        list = new ArrayList();
+        list = new ArrayList<ImageModel>();
         adapter = new Adapter(this, list);
         layoutManager = new GridLayoutManager(this, 2);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+        mainBinding.recyclerView.setLayoutManager(layoutManager);
+        mainBinding.recyclerView.setAdapter(adapter);
+
         addOnScrollToRV();
-
-        searchEditText = findViewById(R.id.search_edit_text);
         provideEditTextListener();
+        renderLoading();
+        getData();
 
-        toolbar = findViewById(R.id.main_inner_toolbar);
-        toolbar.setNavigationOnClickListener(view -> {
+        mainBinding.mainInnerToolbar.setNavigationOnClickListener(view -> {
             dialog.show();
-            searchEditText.setText("");
+            mainBinding.searchEditText.setText("");
             if (keyboardManager.isAcceptingText()) {
                 keyboardManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
             getData();
         });
-        renderLoading();
-        getData();
     }
 
     private void getData() {
@@ -100,14 +90,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void searchData(String query) {
-        ApiProvider.getApiInterface().getSearchData(query, page, pageSize)
+        ApiProvider.getApiInterface()
+                .getSearchData(query, page, pageSize)
                 .enqueue(new Callback<SearchModel>() {
                     @Override
                     public void onResponse(Call<SearchModel> call, Response<SearchModel> response) {
                         dialog.dismiss();
                         list.clear();
-                        list.addAll(response.body().getResults());
-                        adapter.notifyDataSetChanged();
+                        if(response.body() != null) {
+                            list.addAll(response.body().getResults());
+                            adapter.notifyDataSetChanged();
+                        }
                         isLoading = false;
                         dialog.dismiss();
                         checkLastPage();
@@ -147,16 +140,10 @@ public class MainActivity extends AppCompatActivity {
         builder.setView(R.layout.custom_progress_bar);
         dialog = builder.create();
         dialog.show();
-
-        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-        layoutParams.copyFrom(dialog.getWindow().getAttributes());
-        layoutParams.width = 600;
-        layoutParams.height = 500;
-        dialog.getWindow().setAttributes(layoutParams);
     }
 
     private void addOnScrollToRV() {
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mainBinding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -166,10 +153,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void provideEditTextListener() {
-        searchEditText.setOnEditorActionListener((textView, i, keyEvent) -> {
+        mainBinding.searchEditText.setOnEditorActionListener((textView, i, keyEvent) -> {
 
             if(i == EditorInfo.IME_ACTION_DONE) {
-                String query = searchEditText.getText().toString();
+                String query = mainBinding.searchEditText.getText().toString();
                 searchData(query);
                 if (keyboardManager.isAcceptingText()) {
                     keyboardManager.hideSoftInputFromWindow(textView.getWindowToken(), 0);
@@ -179,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
-        searchEditText.addTextChangedListener(new TextWatcher() {
+        mainBinding.searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -192,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                String query = searchEditText.getText().toString();
+                String query = mainBinding.searchEditText.getText().toString();
                 searchData(query);
             }
         });

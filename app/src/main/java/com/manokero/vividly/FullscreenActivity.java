@@ -1,29 +1,26 @@
 package com.manokero.vividly;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.appbar.MaterialToolbar;
+import com.manokero.vividly.databinding.ActivityFullscreenBinding;
 
 public class FullscreenActivity extends AppCompatActivity {
-    ImageView imageView;
-    MaterialToolbar toolbar;
+    private ActivityFullscreenBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_full_image);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_fullscreen);
 
-        toolbar = findViewById(R.id.full_inner_toolbar);
-        toolbar.setNavigationOnClickListener(view -> {
+        binding.fullInnerToolbar.setNavigationOnClickListener(view -> {
             onBackPressed();
         });
 
-        imageView = findViewById(R.id.myZoomageView);
         Glide.with(this)
                 .load(getIntent().getStringExtra("image"))
-                .into(imageView);
+                .into(binding.zoomageView);
     }
 }

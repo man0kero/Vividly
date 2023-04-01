@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.manokero.vividly.databinding.ItemRecyclerViewBinding;
 import com.manokero.vividly.model.ImageModel;
 
 import java.util.ArrayList;
@@ -26,12 +27,21 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ItemViewHolder> {
         this.list = list;
     }
 
+    public static class ItemViewHolder extends RecyclerView.ViewHolder {
+        ItemRecyclerViewBinding binding;
+
+        public ItemViewHolder(@NonNull ItemRecyclerViewBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
+    }
+
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context)
-                .inflate(R.layout.item_recycler_view, parent, false);
-        return new ItemViewHolder(view);
+        ItemRecyclerViewBinding binding = ItemRecyclerViewBinding.inflate(
+                LayoutInflater.from(parent.getContext()), parent, false);
+        return new ItemViewHolder(binding);
     }
 
     @Override
@@ -40,13 +50,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ItemViewHolder> {
         String username = list.get(position).getUser().getName();
         String alt_description = list.get(position).getFormattedAltDescription();
         Glide.with(context).load(list.get(position).getUrls().getRegular())
-                .into(holder.imageView);
+                .into(holder.binding.itemImageView);
 
-        holder.userNameTextView.setText(username);
+        holder.binding.itemUserNameTextView.setText(username);
 
-        holder.descriptionTextView.setText(alt_description);
+        holder.binding.itemDescriptionTextView.setText(alt_description);
 
-        holder.imageView.setOnClickListener(v -> {
+        holder.binding.itemImageView.setOnClickListener(v -> {
             Intent intent = new Intent(context, FullscreenActivity.class);
             intent.putExtra("image", list.get(position).getUrls().getRegular());
             context.startActivity(intent);
@@ -57,19 +67,5 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ItemViewHolder> {
     @Override
     public int getItemCount() {
         return list.size();
-    }
-
-    public static class ItemViewHolder extends RecyclerView.ViewHolder {
-
-        ImageView imageView;
-        TextView userNameTextView;
-        TextView descriptionTextView;
-
-        public ItemViewHolder(@NonNull View itemView) {
-            super(itemView);
-            imageView = itemView.findViewById(R.id.item_imageView);
-            userNameTextView = itemView.findViewById(R.id.item_userNameTextView);
-            descriptionTextView = itemView.findViewById(R.id.item_descriptionTextView);
-        }
     }
 }
